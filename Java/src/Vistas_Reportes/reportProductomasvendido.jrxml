@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null"  pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0bdef274-9c39-4c35-ab3f-5a316573e849">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 1">
+		<box>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="producto" uuid="b0e3d2ba-fbf5-4cdc-bee7-9573928a4ef9">
+		<queryString language="SQL">
+			<![CDATA[SELECT
+    P.Id_Producto,
+    P.Nombre AS Producto,
+    SUM(VP.Cantidad) AS Total_Vendido
+FROM
+    Producto AS P
+JOIN
+    Venta_Producto AS VP ON P.Id_Producto = VP.Id_Producto
+JOIN
+    Venta AS V ON VP.Id_Venta = V.Id_Venta
+WHERE
+    MONTH(V.Fecha_Hora) = MONTH(GETDATE())
+    AND YEAR(V.Fecha_Hora) = YEAR(GETDATE())
+GROUP BY
+    P.Id_Producto,
+    P.Nombre
+ORDER BY
+    Total_Vendido DESC;]]>
+		</queryString>
+		<field name="Id_Producto" class="java.lang.Integer"/>
+		<field name="Producto" class="java.lang.String"/>
+		<field name="Total_Vendido" class="java.lang.Integer"/>
+	</subDataset>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+    P.Id_Producto,
+    P.Nombre AS Producto,
+    SUM(VP.Cantidad) AS Total_Vendido
+FROM
+    Producto AS P
+JOIN
+    Venta_Producto AS VP ON P.Id_Producto = VP.Id_Producto
+JOIN
+    Venta AS V ON VP.Id_Venta = V.Id_Venta
+WHERE
+    MONTH(V.Fecha_Hora) = MONTH(GETDATE())
+    AND YEAR(V.Fecha_Hora) = YEAR(GETDATE())
+GROUP BY
+    P.Id_Producto,
+    P.Nombre
+ORDER BY
+    Total_Vendido DESC;]]>
+	</queryString>
+	<field name="Id_Producto" class="java.lang.Integer"/>
+	<field name="Producto" class="java.lang.String"/>
+	<field name="Total_Vendido" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="94" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="344" height="79" uuid="b15d1955-4f83-49b2-bd50-b64a5167a4dd"/>
+				<textElement>
+					<font size="40" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Farmacia Rosales]]></text>
+			</staticText>
+			<image>
+				<reportElement x="477" y="0" width="78" height="79" uuid="7bd04a88-bc54-4667-97b1-7825899bda3d"/>
+				<imageExpression><![CDATA["C:\\Users\\Diers\\OneDrive\\Escritorio\\CasoFarmacia\\Repositorio-Farmacia-Rosales.-main\\src\\Vistas_Reportes\\Logo.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==1]]></printWhenExpression>
+			<componentElement>
+				<reportElement key="table 1" style="table 1" x="0" y="0" width="555" height="125" uuid="bb3399e3-d92e-465b-b5a6-03d86d7ddbf4"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="producto" uuid="4736c33b-9d99-4bf5-9d11-61d7624a56b6">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="e4690022-3cb7-417c-97f9-1d27dbcd96f9">
+						<jr:columnHeader style="table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="3f8ee6c2-aac4-4934-af00-f03bfa50a2ea"/>
+								<text><![CDATA[Id_Producto]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30"/>
+						<jr:detailCell style="table 1_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="db2f2507-0c68-4772-8afb-3b4d6d2de5a7"/>
+								<textFieldExpression><![CDATA[$F{Id_Producto}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="128b19a3-dced-4b54-8d0e-9227a67633b2">
+						<jr:columnHeader style="table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="b85c8507-dd40-4db7-9262-91c9bc802798"/>
+								<text><![CDATA[Producto]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30"/>
+						<jr:detailCell style="table 1_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="a6b1f397-c445-4245-9dc6-60214a9b7ff4"/>
+								<textFieldExpression><![CDATA[$F{Producto}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="6c1271cf-67ae-4f77-85e2-9e34986a01ef">
+						<jr:columnHeader style="table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="3d1dcde5-a903-45be-89a6-200837ab6b0d"/>
+								<text><![CDATA[Total_Vendido]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30"/>
+						<jr:detailCell style="table 1_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="4f81d2a4-3ac2-4703-9818-af01c1228154"/>
+								<textFieldExpression><![CDATA[$F{Total_Vendido}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="22" width="125" height="20" uuid="c44516f9-18fc-4fe3-a7f3-1cf9e8aeb414"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

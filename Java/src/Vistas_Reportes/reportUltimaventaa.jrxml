@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null"  pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f8e55836-458d-4be1-a885-3e9c6b436b18">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 1">
+		<box>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="Ultima Venta" uuid="aad105a5-0e79-42e8-b16f-7065a80df7dc">
+		<queryString language="SQL">
+			<![CDATA[SELECT
+    ISNULL(Prod.Nombre, 'N/A') AS Producto,
+    VP.Cantidad,
+    VP.Descuento,
+    ISNULL(PCliente.Nombre_1, 'N/A') + ' ' + ISNULL(PCliente.Apellido_1, 'N/A') AS Cliente,
+    ISNULL(PEmpleado.Nombre_1, 'N/A') + ' ' + ISNULL(PEmpleado.Apellido_1, 'N/A') AS Empleado,
+    V.Fecha_Hora,
+    Prod.Precio_Venta AS Precio,
+    (VP.Cantidad * Prod.Precio_Venta) AS Total,
+    CASE WHEN VP.Id_Venta_Producto = MAX(VP.Id_Venta_Producto) OVER (PARTITION BY V.Id_Venta) THEN SUM(VP.Cantidad * Prod.Precio_Venta * (1 - VP.Descuento / 100)) OVER (PARTITION BY V.Id_Venta) ELSE NULL END AS TotalGeneral
+FROM
+    Venta AS V
+LEFT JOIN
+    Venta_Producto AS VP ON V.Id_Venta = VP.Id_Venta
+LEFT JOIN
+    Producto AS Prod ON VP.Id_Producto = Prod.Id_Producto
+LEFT JOIN
+    Cliente AS C ON V.Id_Cliente = C.Id_Cliente
+LEFT JOIN
+    Persona AS PCliente ON C.Id_Persona = PCliente.Id_Persona
+LEFT JOIN
+    Empleado AS E ON V.Id_Empleado = E.Id_Empleado
+LEFT JOIN
+    Persona AS PEmpleado ON E.Id_Persona = PEmpleado.Id_Persona
+WHERE
+    V.Id_Venta = (SELECT MAX(Id_Venta) FROM Venta)
+ORDER BY
+    V.Id_Venta, VP.Id_Venta_Producto;
+]]>
+		</queryString>
+		<field name="Producto" class="java.lang.String"/>
+		<field name="Cantidad" class="java.lang.Integer"/>
+		<field name="Descuento" class="java.math.BigDecimal"/>
+		<field name="Cliente" class="java.lang.String"/>
+		<field name="Empleado" class="java.lang.String"/>
+		<field name="Fecha_Hora" class="java.sql.Timestamp"/>
+		<field name="Precio" class="java.math.BigDecimal"/>
+		<field name="Total" class="java.math.BigDecimal"/>
+		<field name="TotalGeneral" class="java.math.BigDecimal"/>
+	</subDataset>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+    ISNULL(Prod.Nombre, 'N/A') AS Producto,
+    VP.Cantidad,
+    VP.Descuento,
+    ISNULL(PCliente.Nombre_1, 'N/A') + ' ' + ISNULL(PCliente.Apellido_1, 'N/A') AS Cliente,
+    ISNULL(PEmpleado.Nombre_1, 'N/A') + ' ' + ISNULL(PEmpleado.Apellido_1, 'N/A') AS Empleado,
+    V.Fecha_Hora,
+    Prod.Precio_Venta AS Precio,
+    (VP.Cantidad * Prod.Precio_Venta) AS Total,
+    CASE WHEN VP.Id_Venta_Producto = MAX(VP.Id_Venta_Producto) OVER (PARTITION BY V.Id_Venta) THEN SUM(VP.Cantidad * Prod.Precio_Venta * (1 - VP.Descuento / 100)) OVER (PARTITION BY V.Id_Venta) ELSE NULL END AS TotalGeneral
+FROM
+    Venta AS V
+LEFT JOIN
+    Venta_Producto AS VP ON V.Id_Venta = VP.Id_Venta
+LEFT JOIN
+    Producto AS Prod ON VP.Id_Producto = Prod.Id_Producto
+LEFT JOIN
+    Cliente AS C ON V.Id_Cliente = C.Id_Cliente
+LEFT JOIN
+    Persona AS PCliente ON C.Id_Persona = PCliente.Id_Persona
+LEFT JOIN
+    Empleado AS E ON V.Id_Empleado = E.Id_Empleado
+LEFT JOIN
+    Persona AS PEmpleado ON E.Id_Persona = PEmpleado.Id_Persona
+WHERE
+    V.Id_Venta = (SELECT MAX(Id_Venta) FROM Venta)
+ORDER BY
+    V.Id_Venta, VP.Id_Venta_Producto;]]>
+	</queryString>
+	<field name="Producto" class="java.lang.String"/>
+	<field name="Cantidad" class="java.lang.Integer"/>
+	<field name="Descuento" class="java.math.BigDecimal"/>
+	<field name="Cliente" class="java.lang.String"/>
+	<field name="Empleado" class="java.lang.String"/>
+	<field name="Fecha_Hora" class="java.sql.Timestamp"/>
+	<field name="Precio" class="java.math.BigDecimal"/>
+	<field name="Total" class="java.math.BigDecimal"/>
+	<field name="TotalGeneral" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="92" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="487" height="79" uuid="f09b1b3f-5d89-4d25-adfc-f30b9cab0587"/>
+				<textElement>
+					<font size="60"/>
+				</textElement>
+				<text><![CDATA[Farmacia Rosales]]></text>
+			</staticText>
+			<image>
+				<reportElement x="689" y="0" width="113" height="79" uuid="dc5e7fe4-bd67-49b5-8561-8cd24e9b4502"/>
+				<imageExpression><![CDATA["C:\\Users\\Diers\\OneDrive\\Escritorio\\CasoFarmacia\\Repositorio-Farmacia-Rosales.-main\\src\\Vistas_Reportes\\Logo.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==1]]></printWhenExpression>
+			<componentElement>
+				<reportElement key="table 1" style="table 1" x="0" y="0" width="802" height="125" uuid="eda3cc11-5057-4b4d-a166-dd954326fca1"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Ultima Venta" uuid="4d22d896-a587-4d0a-8bbb-4d24533fd68e">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="25504239-348a-4ded-8b01-cb698ed2c07f">
+						<jr:columnHeader style="table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="a5e5d540-95ad-45c2-ac13-4981f677eb10"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Producto]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30"/>
+						<jr:detailCell style="table 1_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="1e47731b-f8e1-4177-81d6-592b08bcf7a0"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{Producto}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="eabedd61-51db-4155-9679-49a387232e47">
+						<jr:columnHeader style="table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="fb70bcca-32a2-427a-9ef7-fc29a2cd1db1"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Cantidad]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30"/>
+						<jr:detailCell style="table 1_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="cbe0fb42-ad51-424c-a97d-5d3ad68a87c1"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{Cantidad}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="fe51debb-9d84-4d25-9913-df1471c0edd3">
+						<jr:columnHeader style="table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="dab45f73-3258-4cd0-a82c-f15a7fbd5ff0"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Descuento]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30"/>
+						<jr:detailCell style="table 1_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="e72eac71-804b-4d37-b608-d8a9b857d6e8"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{Descuento}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="ab533b40-d946-460e-b227-ce5b86da9ec6">
+						<jr:columnHeader style="table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="f35fe1b3-8d02-40b4-b930-79d3947b9d76"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Cliente]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30"/>
+						<jr:detailCell style="table 1_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="01387261-131a-4e03-8b72-8595f3c4bf50"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{Cliente}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="1d0d9231-b56b-4485-93c1-e3e936a9aef5">
+						<jr:columnHeader style="table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="eaba160f-c500-4820-a818-3c65978da7d5"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Empleado]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30"/>
+						<jr:detailCell style="table 1_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="5f88f1a1-d2aa-47a7-8e1b-f03f19bae3eb"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{Empleado}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="f4995d87-dc58-43fd-bde7-8eafbd46c086">
+						<jr:columnHeader style="table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="54580d34-8de4-4600-8a2f-3608c4aab937"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Fecha_Hora]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30"/>
+						<jr:detailCell style="table 1_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="d6a1406c-ffe6-48df-b2b0-75978ab7b842"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{Fecha_Hora}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="25fff983-8aac-40ee-8972-97895b9ed3a1">
+						<jr:columnHeader style="table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="d0bd27cb-9a77-414e-9305-9702dbfea47f"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Precio]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30"/>
+						<jr:detailCell style="table 1_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="8d216bb2-11f1-4269-87d0-82e34559e983"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{Precio}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="462bf05c-8fcd-4405-b269-6987ae883c0f">
+						<jr:columnHeader style="table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="dd264853-0bf5-42f6-8c5f-e334c97fac46"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[Total]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30"/>
+						<jr:detailCell style="table 1_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="d2bcf7be-ad9a-4b6b-b332-b9d54c32bc17"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{Total}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="081daaab-cdf5-4dc9-9861-1a0de17e288e">
+						<jr:columnHeader style="table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="a0a03153-e278-4bdf-be28-6cfce83d31e4"/>
+								<textElement textAlignment="Center"/>
+								<text><![CDATA[TotalGeneral]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30"/>
+						<jr:detailCell style="table 1_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="83f8774d-4fec-4b43-a7ce-e47a68c95936"/>
+								<textElement textAlignment="Center"/>
+								<textFieldExpression><![CDATA[$F{TotalGeneral}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="0" y="22" width="163" height="20" uuid="a4e71981-5fc2-42f1-a3bc-972e1948a646"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

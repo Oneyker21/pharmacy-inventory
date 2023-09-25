@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null"  pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="855a14e0-160f-4cc6-b9c9-f66cf61eea1c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 1">
+		<box>
+			<topPen lineWidth="1.0" lineColor="#000000"/>
+			<bottomPen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#EFF7FF"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="New Dataset 1" uuid="02542a25-85f4-490d-bea5-8bd38125e5bf">
+		<queryString language="SQL">
+			<![CDATA[WITH LastVentaProducto AS (
+    SELECT
+        VP.Id_Venta,
+        MAX(VP.Id_Venta_Producto) AS LastId_Venta_Producto
+    FROM
+        Venta_Producto AS VP
+    GROUP BY
+        VP.Id_Venta
+)
+SELECT
+    Prod.Nombre AS Producto,
+    SUM(VP.Cantidad) AS CantidadTotal,
+    SUM(VP.Cantidad * Prod.Precio_Venta) AS Total,
+    SUM(CASE WHEN VP.Id_Venta_Producto = LVP.LastId_Venta_Producto THEN VP.Cantidad * Prod.Precio_Venta * (1 - VP.Descuento / 100) ELSE 0 END) AS TotalGeneral,
+    SUM((VP.Cantidad * (Prod.Precio_Venta * (1 - VP.Descuento / 100))) - (VP.Cantidad * Prod.Precio_Compra)) AS GananciaTotal
+FROM
+    Venta AS V
+LEFT JOIN
+    Venta_Producto AS VP ON V.Id_Venta = VP.Id_Venta
+LEFT JOIN
+    Producto AS Prod ON VP.Id_Producto = Prod.Id_Producto
+LEFT JOIN
+    LastVentaProducto AS LVP ON V.Id_Venta = LVP.Id_Venta
+WHERE
+    V.Fecha_Hora >= DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0) AND
+    V.Fecha_Hora < DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()) + 1, 0)
+GROUP BY
+    Prod.Nombre;]]>
+		</queryString>
+		<field name="Producto" class="java.lang.String"/>
+		<field name="CantidadTotal" class="java.lang.Integer"/>
+		<field name="Total" class="java.math.BigDecimal"/>
+		<field name="TotalGeneral" class="java.math.BigDecimal"/>
+		<field name="GananciaTotal" class="java.math.BigDecimal"/>
+	</subDataset>
+	<queryString language="SQL">
+		<![CDATA[WITH LastVentaProducto AS (
+    SELECT
+        VP.Id_Venta,
+        MAX(VP.Id_Venta_Producto) AS LastId_Venta_Producto
+    FROM
+        Venta_Producto AS VP
+    GROUP BY
+        VP.Id_Venta
+)
+SELECT
+    Prod.Nombre AS Producto,
+    SUM(VP.Cantidad) AS CantidadTotal,
+    SUM(VP.Cantidad * Prod.Precio_Venta) AS Total,
+    SUM(CASE WHEN VP.Id_Venta_Producto = LVP.LastId_Venta_Producto THEN VP.Cantidad * Prod.Precio_Venta * (1 - VP.Descuento / 100) ELSE 0 END) AS TotalGeneral,
+    SUM((VP.Cantidad * (Prod.Precio_Venta * (1 - VP.Descuento / 100))) - (VP.Cantidad * Prod.Precio_Compra)) AS GananciaTotal
+FROM
+    Venta AS V
+LEFT JOIN
+    Venta_Producto AS VP ON V.Id_Venta = VP.Id_Venta
+LEFT JOIN
+    Producto AS Prod ON VP.Id_Producto = Prod.Id_Producto
+LEFT JOIN
+    LastVentaProducto AS LVP ON V.Id_Venta = LVP.Id_Venta
+WHERE
+    V.Fecha_Hora >= DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0) AND
+    V.Fecha_Hora < DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()) + 1, 0)
+GROUP BY
+    Prod.Nombre;]]>
+	</queryString>
+	<field name="Producto" class="java.lang.String"/>
+	<field name="CantidadTotal" class="java.lang.Integer"/>
+	<field name="Total" class="java.math.BigDecimal"/>
+	<field name="TotalGeneral" class="java.math.BigDecimal"/>
+	<field name="GananciaTotal" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="101" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="386" height="79" uuid="d9a4d18e-1207-471b-8926-674a660f91a8"/>
+				<textElement>
+					<font size="45" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Farmacia Rosales]]></text>
+			</staticText>
+			<image>
+				<reportElement x="455" y="0" width="100" height="79" uuid="03ddb3b6-562e-491a-8b3a-69e79b9c12d0"/>
+				<imageExpression><![CDATA["C:\\Users\\Diers\\OneDrive\\Escritorio\\CasoFarmacia\\Repositorio-Farmacia-Rosales.-main\\src\\Vistas_Reportes\\Logo.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT}==1]]></printWhenExpression>
+			<componentElement>
+				<reportElement key="table 1" style="table 1" x="0" y="0" width="555" height="125" uuid="613340cd-474a-4afb-89a9-2aeba082cbb6"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="New Dataset 1" uuid="ca4aeb17-9e36-4458-a25e-59363774cfd2">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="90" uuid="1ce35bd6-f067-4111-8194-1e31602a29b7">
+						<jr:columnHeader style="table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="9f763a18-a9c9-43a6-bcb0-18cd6433de96"/>
+								<text><![CDATA[Producto]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30"/>
+						<jr:detailCell style="table 1_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="edfc67b7-6358-4a8e-8c6a-ca849b99fbe6"/>
+								<textFieldExpression><![CDATA[$F{Producto}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="3fd2c7ca-a327-4658-96d5-ce68f16535ec">
+						<jr:columnHeader style="table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="f852b338-28e2-4a87-aef6-29dd059d47a2"/>
+								<text><![CDATA[CantidadTotal]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30"/>
+						<jr:detailCell style="table 1_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="209a5dc4-b7f4-4676-a0cc-88a791e4e48d"/>
+								<textFieldExpression><![CDATA[$F{CantidadTotal}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="8997b9a3-d44c-4dcc-ac16-5bf9f6a844cb">
+						<jr:columnHeader style="table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="32e44f72-f91b-43fd-a526-bb99107e7cde"/>
+								<text><![CDATA[Total]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30"/>
+						<jr:detailCell style="table 1_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="c964b727-8f40-479e-b9ed-75949db31ba4"/>
+								<textFieldExpression><![CDATA[$F{Total}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="230184c5-9604-4596-91b7-dd7138344d0b">
+						<jr:columnHeader style="table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="094a8ce4-2285-4d10-a92f-7246094a0369"/>
+								<text><![CDATA[TotalGeneral]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30"/>
+						<jr:detailCell style="table 1_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="2c8432ed-85f3-42f4-9446-a14773695310"/>
+								<textFieldExpression><![CDATA[$F{TotalGeneral}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="f3f1dc3f-714f-4e6f-91f7-32ed4daa163a">
+						<jr:columnHeader style="table 1_CH" height="30">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="df5e2617-35b2-4162-9c7f-abc9a8f1af80"/>
+								<text><![CDATA[GananciaTotal]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter style="table 1_CH" height="30"/>
+						<jr:detailCell style="table 1_TD" height="20">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="e4b41b48-95e0-4ad3-98c9-1dd4ced1859e"/>
+								<textFieldExpression><![CDATA[$F{GananciaTotal}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="22" width="158" height="20" uuid="10dfc41a-881c-4089-b02d-de91573c95ae"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>
