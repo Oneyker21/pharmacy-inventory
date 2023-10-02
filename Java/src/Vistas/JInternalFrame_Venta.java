@@ -40,7 +40,7 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
     public JInternalFrame_Venta() {
         initComponents();
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-       setTitle("Ventas Realizadas");
+        setTitle("Ventas Realizadas");
         setFrameIcon(new ImageIcon("C:\\Users\\Diers\\OneDrive\\Escritorio\\CasoFarmacia\\Repositorio-Farmacia-Rosales.-main\\src\\Vistas_Iconos\\apothecary-IconoPequeño.png"));
         personalizarTitulosTabla();
         ajustarAlturaFilasTabla();
@@ -81,17 +81,15 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
     }
 
     public void mostrar() {
-    try {
-        DefaultTableModel modelo;
-        CRUD_Venta_Producto ventaProductoDAO = new CRUD_Venta_Producto();
-        modelo = ventaProductoDAO.mostrarDatosVenta();
-        jTable_GestionVenta.setModel(modelo);
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, e);
+        try {
+            DefaultTableModel modelo;
+            CRUD_Venta_Producto ventaProductoDAO = new CRUD_Venta_Producto();
+            modelo = ventaProductoDAO.mostrarDatosVenta();
+            jTable_GestionVenta.setModel(modelo);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
-}
-
-
 
     public void buscarVentaYProducto() {
         try {
@@ -424,15 +422,15 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jTextField_Buscar_GetionVentaKeyReleased
 
     private void jButton_ReporteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_ReporteMouseClicked
-          Conexion con = new Conexion();
+        Conexion con = new Conexion();
         Connection cn = (Connection) con.conectar();
-        
+
         String path = "C:\\Users\\Diers\\OneDrive\\Escritorio\\CasoFarmacia\\Repositorio-Farmacia-Rosales.-main\\src\\Vistas_Reportes\\reportUltimaventaa.jrxml";
         JasperReport jr;
         try {
             jr = JasperCompileManager.compileReport(path);
             JasperPrint mostrarReporte = JasperFillManager.fillReport(jr, null, cn);
-            JasperViewer.viewReport(mostrarReporte,false);
+            JasperViewer.viewReport(mostrarReporte, false);
 
         } catch (JRException e) {
             JOptionPane.showMessageDialog(null, e);
@@ -444,15 +442,15 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton_ReporteActionPerformed
 
     private void jButton_ReportemesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_ReportemesMouseClicked
-          Conexion con = new Conexion();
+        Conexion con = new Conexion();
         Connection cn = (Connection) con.conectar();
-        
+
         String path = "C:\\Users\\Diers\\OneDrive\\Escritorio\\CasoFarmacia\\Repositorio-Farmacia-Rosales.-main\\src\\Vistas_Reportes\\reportganaciames.jrxml";
         JasperReport jr;
         try {
             jr = JasperCompileManager.compileReport(path);
             JasperPrint mostrarReporte = JasperFillManager.fillReport(jr, null, cn);
-            JasperViewer.viewReport(mostrarReporte,false);
+            JasperViewer.viewReport(mostrarReporte, false);
 
         } catch (JRException e) {
             JOptionPane.showMessageDialog(null, e);
@@ -464,15 +462,15 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton_ReportemesActionPerformed
 
     private void jButton_ReportetoaventaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_ReportetoaventaMouseClicked
-          Conexion con = new Conexion();
+        Conexion con = new Conexion();
         Connection cn = (Connection) con.conectar();
-        
+
         String path = "C:\\Users\\Diers\\OneDrive\\Escritorio\\CasoFarmacia\\Repositorio-Farmacia-Rosales.-main\\src\\Vistas_Reportes\\reportReportedetodaventa.jrxml";
         JasperReport jr;
         try {
             jr = JasperCompileManager.compileReport(path);
             JasperPrint mostrarReporte = JasperFillManager.fillReport(jr, null, cn);
-            JasperViewer.viewReport(mostrarReporte,false);
+            JasperViewer.viewReport(mostrarReporte, false);
 
         } catch (JRException e) {
             JOptionPane.showMessageDialog(null, e);
@@ -484,15 +482,15 @@ public class JInternalFrame_Venta extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton_ReportetoaventaActionPerformed
 
     private void jButton_productosmasvendidoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton_productosmasvendidoMouseClicked
-         Conexion con = new Conexion();
+        Conexion con = new Conexion();
         Connection cn = (Connection) con.conectar();
-        
+
         String path = "C:\\Users\\Diers\\OneDrive\\Escritorio\\CasoFarmacia\\Repositorio-Farmacia-Rosales.-main\\src\\Vistas_Reportes\\reportProductomasvendido.jrxml";
         JasperReport jr;
         try {
             jr = JasperCompileManager.compileReport(path);
             JasperPrint mostrarReporte = JasperFillManager.fillReport(jr, null, cn);
-            JasperViewer.viewReport(mostrarReporte,false);
+            JasperViewer.viewReport(mostrarReporte, false);
 
         } catch (JRException e) {
             JOptionPane.showMessageDialog(null, e);

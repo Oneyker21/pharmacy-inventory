@@ -1,6 +1,4 @@
-
 package Vistas;
-
 
 import javax.swing.JFrame;
 
@@ -10,7 +8,6 @@ import javax.swing.JFrame;
  */
 public class JFrame_Espera extends javax.swing.JFrame {
 
-    
     public JFrame_Espera() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -41,8 +38,6 @@ public class JFrame_Espera extends javax.swing.JFrame {
         cargaThread.start();
     }
 
-    
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -67,8 +62,7 @@ public class JFrame_Espera extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    public static void main(String args[]) {        
+    public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JFrame_Espera frameEspera = new JFrame_Espera();
