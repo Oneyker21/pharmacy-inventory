@@ -58,7 +58,6 @@ public class CRUD_Categoria {
             call.setString(1, textoBusqueda);
             rs = call.executeQuery();
 
-
             while (rs.next()) {
                 registro[0] = rs.getString("Id_Categoria");
                 registro[1] = rs.getString("Nombre_Categoria");
@@ -66,7 +65,7 @@ public class CRUD_Categoria {
 
                 modelo.addRow(registro);
             }
-        return modelo;
+            return modelo;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
             return null;

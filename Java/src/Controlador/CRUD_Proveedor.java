@@ -54,7 +54,7 @@ public class CRUD_Proveedor {
         ResultSet rs;
         DefaultTableModel modelo;
 
-        String[] titulos ={"ID", "Cedula", "Primer N", "Segundo N", "Primer A", "Segundo A", "Gmail", "Telefono", "Direccion"};
+        String[] titulos = {"ID", "Cedula", "Primer N", "Segundo N", "Primer A", "Segundo A", "Gmail", "Telefono", "Direccion"};
         String[] registro = new String[9];
 
         modelo = new DefaultTableModel(null, titulos);

@@ -38,24 +38,23 @@ public class CRUD_Producto {
 
     public final Conexion con = new Conexion();
     public final Connection cn = (Connection) con.conectar();
-    
-    public int obtenerTotalCantidadProducto() {
-    try {
-        CallableStatement statement = cn.prepareCall("{CALL CalcularTotalCantidadProducto}");
-        ResultSet resultSet = statement.executeQuery();
 
-        if (resultSet.next()) {
-            return resultSet.getInt("TotalCantidad");
+    public int obtenerTotalCantidadProducto() {
+        try {
+            CallableStatement statement = cn.prepareCall("{CALL CalcularTotalCantidadProducto}");
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("TotalCantidad");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+
+        return 0;
     }
 
-    return 0; 
-}
-
-    
-     public void borrarProductoYProveedor(int IdProducto) {
+    public void borrarProductoYProveedor(int IdProducto) {
         String sql = "{call BorrarProductoYProveedor(?)}";
         try (CallableStatement stmt = cn.prepareCall(sql)) {
             stmt.setInt(1, IdProducto);
@@ -97,84 +96,76 @@ public class CRUD_Producto {
         }
     }
 
-   
+    public boolean actualizarProductoConProveedor(Clase_Producto producto) {
+        String sql = "{call ActualizarProductoConProveedor(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
+        try (CallableStatement stmt = cn.prepareCall(sql)) {
+            stmt.setInt(1, producto.getId_Producto());
+            stmt.setString(2, producto.getNombre());
+            stmt.setString(3, producto.getDescripcion());
+            stmt.setInt(4, producto.getCantidad_Producto());
+            stmt.setFloat(5, producto.getPrecio_Compra());
+            stmt.setFloat(6, producto.getPrecio_Venta());
+            stmt.setBytes(7, producto.getImagen_Producto());
+            stmt.setDate(8, producto.getFecha_Caducidad());
+            stmt.setInt(9, producto.getId_Categoria());
+            stmt.setInt(10, producto.getId_Presentacion());
+            stmt.setInt(11, producto.getId_Laboratorio());
+            stmt.setInt(12, producto.getId_Proveedor());
 
- public boolean actualizarProductoConProveedor(Clase_Producto producto) {
-    String sql = "{call ActualizarProductoConProveedor(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}";
-    try (CallableStatement stmt = cn.prepareCall(sql)) {
-        stmt.setInt(1, producto.getId_Producto());
-        stmt.setString(2, producto.getNombre());
-        stmt.setString(3, producto.getDescripcion());
-        stmt.setInt(4, producto.getCantidad_Producto());
-        stmt.setFloat(5, producto.getPrecio_Compra());
-        stmt.setFloat(6, producto.getPrecio_Venta());
-        stmt.setBytes(7, producto.getImagen_Producto());
-        stmt.setDate(8, producto.getFecha_Caducidad());
-        stmt.setInt(9, producto.getId_Categoria());
-        stmt.setInt(10, producto.getId_Presentacion());
-        stmt.setInt(11, producto.getId_Laboratorio());
-        stmt.setInt(12, producto.getId_Proveedor());
+            stmt.executeUpdate();
 
-        stmt.executeUpdate();
-
-        System.out.println("Producto actualizado correctamente.");
-        return true;
-    } catch (SQLException e) {
-        e.printStackTrace();
-        return false;
+            System.out.println("Producto actualizado correctamente.");
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
-}
-
-
-
 
     public DefaultTableModel BuscarProducto(String textoBusqueda) {
-    ResultSet rs;
-    DefaultTableModel modelo;
-    String[] titulos = {"Id_Producto", "Nombre", "Descripcion", "Cantidad_Producto", "Precio_Compra", "Precio_Venta", "Imagen_Producto", "Fecha_Caducidad", "Nombre_Categoria", "Nombre_Presentacion", "Nombre_Laboratorio", "Proveedor"};
-    Object[] registro = new Object[12];
+        ResultSet rs;
+        DefaultTableModel modelo;
+        String[] titulos = {"Id_Producto", "Nombre", "Descripcion", "Cantidad_Producto", "Precio_Compra", "Precio_Venta", "Imagen_Producto", "Fecha_Caducidad", "Nombre_Categoria", "Nombre_Presentacion", "Nombre_Laboratorio", "Proveedor"};
+        Object[] registro = new Object[12];
 
-    modelo = new DefaultTableModel(null, titulos);
+        modelo = new DefaultTableModel(null, titulos);
 
-    try (CallableStatement call = cn.prepareCall("{call BuscarProductoconProveedor(?)}")) {
-        call.setString(1, textoBusqueda);
-        rs = call.executeQuery();
+        try (CallableStatement call = cn.prepareCall("{call BuscarProductoconProveedor(?)}")) {
+            call.setString(1, textoBusqueda);
+            rs = call.executeQuery();
 
-        while (rs.next()) {
-            registro[0] = rs.getString("Id_Producto");
-            registro[1] = rs.getString("Nombre");
-            registro[2] = rs.getString("Descripcion");
-            registro[3] = rs.getString("Cantidad_Producto");
-            registro[4] = rs.getString("Precio_Compra");
-            registro[5] = rs.getString("Precio_Venta");
-            // Obtener la imagen como un ImageIcon
-            byte[] imagenBytes = rs.getBytes("Imagen_Producto");
-            ImageIcon imagenIcono;
-            if (imagenBytes != null && imagenBytes.length > 0) {
-                imagenIcono = new ImageIcon(imagenBytes);
-            } else {
-                imagenIcono = new ImageIcon(); // O cualquier otra imagen por defecto
+            while (rs.next()) {
+                registro[0] = rs.getString("Id_Producto");
+                registro[1] = rs.getString("Nombre");
+                registro[2] = rs.getString("Descripcion");
+                registro[3] = rs.getString("Cantidad_Producto");
+                registro[4] = rs.getString("Precio_Compra");
+                registro[5] = rs.getString("Precio_Venta");
+                // Obtener la imagen como un ImageIcon
+                byte[] imagenBytes = rs.getBytes("Imagen_Producto");
+                ImageIcon imagenIcono;
+                if (imagenBytes != null && imagenBytes.length > 0) {
+                    imagenIcono = new ImageIcon(imagenBytes);
+                } else {
+                    imagenIcono = new ImageIcon(); // O cualquier otra imagen por defecto
+                }
+                registro[6] = imagenIcono;
+                registro[7] = rs.getString("Fecha_Caducidad");
+                registro[8] = rs.getString("Nombre_Categoria");
+                registro[9] = rs.getString("Nombre_Presentacion");
+                registro[10] = rs.getString("Nombre_Laboratorio");
+                registro[11] = rs.getString("Proveedor");
+
+                modelo.addRow(registro);
             }
-            registro[6] = imagenIcono;
-            registro[7] = rs.getString("Fecha_Caducidad");
-            registro[8] = rs.getString("Nombre_Categoria");
-            registro[9] = rs.getString("Nombre_Presentacion");
-            registro[10] = rs.getString("Nombre_Laboratorio");
-            registro[11] = rs.getString("Proveedor");
-
-            modelo.addRow(registro);
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ha ocurrido un error SQL: " + e.getMessage());
+            return null;
         }
-        rs.close();
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "Ha ocurrido un error SQL: " + e.getMessage());
-        return null;
+
+        return modelo;
     }
-
-    return modelo;
-}
-
-
-
 
     public void mostrarProductoConProveedor() {
         DefaultTableModel model = (DefaultTableModel) jTable_Producto1.getModel();
@@ -243,8 +234,6 @@ public class CRUD_Producto {
             return false;
         }
     }
-
-   
 
     public void eliminarProductoConProveedor(int idProducto) {
         String sql = "{call EliminarProductoConProveedor(?)}";

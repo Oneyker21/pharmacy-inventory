@@ -35,23 +35,24 @@ public class CRUD_Venta_Producto {
 
     public final Conexion con = new Conexion();
     public final Connection cn = (Connection) con.conectar();
-    
+
     public int obtenerCantidadStockProducto(String busqueda) {
-    int cantidadStock = 0;
-    try {
-        String query = "{ CALL MostrarCantidadStok(?) }";
-        CallableStatement cstmt = cn.prepareCall(query);
-        cstmt.setString(1, busqueda);
-        ResultSet rs = cstmt.executeQuery();
-        if (rs.next()) {
-            cantidadStock = rs.getInt("Cantidad_Producto");
+        int cantidadStock = 0;
+        try {
+            String query = "{ CALL MostrarCantidadStok(?) }";
+            CallableStatement cstmt = cn.prepareCall(query);
+            cstmt.setString(1, busqueda);
+            ResultSet rs = cstmt.executeQuery();
+            if (rs.next()) {
+                cantidadStock = rs.getInt("Cantidad_Producto");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
         }
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, e);
+        return cantidadStock;
     }
-    return cantidadStock;
-}
-     public ArrayList<Clase_Producto_Cargardatos> buscarProductos(String busqueda) {
+
+    public ArrayList<Clase_Producto_Cargardatos> buscarProductos(String busqueda) {
         ArrayList<Clase_Producto_Cargardatos> listaProductos = new ArrayList<>();
 
         try {
@@ -79,57 +80,55 @@ public class CRUD_Venta_Producto {
         return listaProductos;
     }
 
-   public void agregarVentasYProductos(List<Clase_Venta> ventas) {
-    String sql = "{CALL AgregarVentaYProducto(?, ?, ?, ?, ?, ?)}";
+    public void agregarVentasYProductos(List<Clase_Venta> ventas) {
+        String sql = "{CALL AgregarVentaYProducto(?, ?, ?, ?, ?, ?)}";
 
-    try (CallableStatement stmt = cn.prepareCall(sql)) {
-        // Iniciar la transacción
-        cn.setAutoCommit(false);
+        try (CallableStatement stmt = cn.prepareCall(sql)) {
+            // Iniciar la transacción
+            cn.setAutoCommit(false);
 
-        for (Clase_Venta venta : ventas) {
-            stmt.setObject(1, venta.getFecha_Hora());
+            for (Clase_Venta venta : ventas) {
+                stmt.setObject(1, venta.getFecha_Hora());
 
-         if (venta.getId_Cliente() == -1) {
-        stmt.setNull(2, Types.INTEGER);
-    } else {
-        stmt.setInt(2, venta.getId_Cliente());
-    }
+                if (venta.getId_Cliente() == -1) {
+                    stmt.setNull(2, Types.INTEGER);
+                } else {
+                    stmt.setInt(2, venta.getId_Cliente());
+                }
 
-            stmt.setInt(3, venta.getId_Empleado());
+                stmt.setInt(3, venta.getId_Empleado());
 
-            if (venta.getDescuento() == null) {
-                stmt.setNull(4, java.sql.Types.DECIMAL);
-            } else {
-                stmt.setBigDecimal(4, venta.getDescuento());
+                if (venta.getDescuento() == null) {
+                    stmt.setNull(4, java.sql.Types.DECIMAL);
+                } else {
+                    stmt.setBigDecimal(4, venta.getDescuento());
+                }
+
+                stmt.setInt(5, venta.getId_Producto());
+                stmt.setInt(6, venta.getCantidad());
+
+                stmt.execute();
             }
 
-            stmt.setInt(5, venta.getId_Producto());
-            stmt.setInt(6, venta.getCantidad());
-
-            stmt.execute();
-        }
-
-        // Confirmar la transacción
-        cn.commit();
-    } catch (SQLException e) {
-        // Rollback en caso de error
-        try {
-            cn.rollback();
-        } catch (SQLException rollbackException) {
-            rollbackException.printStackTrace();
-        }
-        e.printStackTrace();
-    } finally {
-        // Restaurar el modo de autocommit
-        try {
-            cn.setAutoCommit(true);
-        } catch (SQLException autoCommitException) {
-            autoCommitException.printStackTrace();
+            // Confirmar la transacción
+            cn.commit();
+        } catch (SQLException e) {
+            // Rollback en caso de error
+            try {
+                cn.rollback();
+            } catch (SQLException rollbackException) {
+                rollbackException.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            // Restaurar el modo de autocommit
+            try {
+                cn.setAutoCommit(true);
+            } catch (SQLException autoCommitException) {
+                autoCommitException.printStackTrace();
+            }
         }
     }
-}
-
-
 
     public DefaultTableModel mostrarDatosVenta() {
         ResultSet rs;
@@ -315,6 +314,7 @@ public class CRUD_Venta_Producto {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+
     public ArrayList<Clase_Cliente> buscarClientes(String busqueda) {
         ArrayList<Clase_Cliente> listaClientes = new ArrayList<>();
         try {

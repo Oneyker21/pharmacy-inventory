@@ -1,5 +1,5 @@
-
 package Controlador;
+
 import Modelo.Clase_Presentacion;
 import Controlador_Conexion_DB.Conexion;
 import java.sql.CallableStatement;
@@ -8,43 +8,43 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author diedr
  */
 public class CRUD_Presentacion {
+
     public final Conexion con = new Conexion();
-    public  final Connection cn = (Connection) con.conectar();
-    
-    
-    
+    public final Connection cn = (Connection) con.conectar();
+
     public DefaultTableModel mostrarDatos() {
-    ResultSet rs;
-    DefaultTableModel modelo;
-    String[] titulos = {"ID", "Nombre de Presentacion", "Detalle"};
-    String[] registro = new String[3];
+        ResultSet rs;
+        DefaultTableModel modelo;
+        String[] titulos = {"ID", "Nombre de Presentacion", "Detalle"};
+        String[] registro = new String[3];
 
-    modelo = new DefaultTableModel(null, titulos);
+        modelo = new DefaultTableModel(null, titulos);
 
-    try {
-        CallableStatement cbstc = cn.prepareCall("{call ConsultarDatosPresentacion}");
-        rs = cbstc.executeQuery();
+        try {
+            CallableStatement cbstc = cn.prepareCall("{call ConsultarDatosPresentacion}");
+            rs = cbstc.executeQuery();
 
-        while (rs.next()) {
-            registro[0] = rs.getString("Id_Presentacion");
-            registro[1] = rs.getString("Nombre_Presentacion");
-            registro[2] = rs.getString("Detalle");
+            while (rs.next()) {
+                registro[0] = rs.getString("Id_Presentacion");
+                registro[1] = rs.getString("Nombre_Presentacion");
+                registro[2] = rs.getString("Detalle");
 
-            modelo.addRow(registro);
+                modelo.addRow(registro);
+            }
+            return modelo;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+            return null;
         }
-        return modelo;
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, e);
-        return null;
     }
-}
 
-public DefaultTableModel buscarDatos(String textoBusqueda) {
+    public DefaultTableModel buscarDatos(String textoBusqueda) {
         ResultSet rs;
         DefaultTableModel modelo;
 
@@ -58,7 +58,6 @@ public DefaultTableModel buscarDatos(String textoBusqueda) {
             call.setString(1, textoBusqueda);
             rs = call.executeQuery();
 
-
             while (rs.next()) {
                 registro[0] = rs.getString("Id_Presentacion");
                 registro[1] = rs.getString("Nombre_Presentacion");
@@ -66,62 +65,62 @@ public DefaultTableModel buscarDatos(String textoBusqueda) {
 
                 modelo.addRow(registro);
             }
-        return modelo;
+            return modelo;
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
             return null;
         }
     }
 
-public boolean verificarDatos(String dato) {
-    ResultSet rs;
+    public boolean verificarDatos(String dato) {
+        ResultSet rs;
 
-    try {
-        CallableStatement call = cn.prepareCall("{call BuscarPresentacion(?)}");
-        call.setString(1, dato);
-        rs = call.executeQuery();
+        try {
+            CallableStatement call = cn.prepareCall("{call BuscarPresentacion(?)}");
+            call.setString(1, dato);
+            rs = call.executeQuery();
 
-        return rs.next();
+            return rs.next();
 
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, e);
-        return false;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+            return false;
+        }
     }
-}
 
-public void Guardar(Clase_Presentacion presentacion) {
-    try {
-        CallableStatement cbst = cn.prepareCall("{call InsertarPresentacion(?,?)}");
-        cbst.setString(1, presentacion.getNombre_Presentacion());
-        cbst.setString(2, presentacion.getDetalle());
-        cbst.executeUpdate();
+    public void Guardar(Clase_Presentacion presentacion) {
+        try {
+            CallableStatement cbst = cn.prepareCall("{call InsertarPresentacion(?,?)}");
+            cbst.setString(1, presentacion.getNombre_Presentacion());
+            cbst.setString(2, presentacion.getDetalle());
+            cbst.executeUpdate();
 
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, e);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
-}
 
-public void actualizar(Clase_Presentacion presentacion) {
-    try {
-        CallableStatement cbst = cn.prepareCall("{call ActualizarPresentacion(?,?,?)}");
-        cbst.setInt(1, presentacion.getId_Presentacion());
-        cbst.setString(2, presentacion.getNombre_Presentacion());
-        cbst.setString(3, presentacion.getDetalle());
-        cbst.executeUpdate();
+    public void actualizar(Clase_Presentacion presentacion) {
+        try {
+            CallableStatement cbst = cn.prepareCall("{call ActualizarPresentacion(?,?,?)}");
+            cbst.setInt(1, presentacion.getId_Presentacion());
+            cbst.setString(2, presentacion.getNombre_Presentacion());
+            cbst.setString(3, presentacion.getDetalle());
+            cbst.executeUpdate();
 
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, e);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
-}
 
-public void eliminar(int Id_Presentacion) {
-    try {
-        CallableStatement cbst = cn.prepareCall("{call EliminarPresentacion(?)}");
-        cbst.setInt(1, Id_Presentacion);
-        cbst.executeUpdate();
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, e);
+    public void eliminar(int Id_Presentacion) {
+        try {
+            CallableStatement cbst = cn.prepareCall("{call EliminarPresentacion(?)}");
+            cbst.setInt(1, Id_Presentacion);
+            cbst.executeUpdate();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
-}
 
 }

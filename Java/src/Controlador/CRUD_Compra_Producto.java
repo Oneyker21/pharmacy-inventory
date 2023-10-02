@@ -30,44 +30,40 @@ public class CRUD_Compra_Producto {
 
     public final Conexion con = new Conexion();
     public final Connection cn = (Connection) con.conectar();
-    
+
     public void agregarLote(Clase_Producto producto) {
-    String sql = "{CALL AgregarLote(?, ?, ?, ?, ?)}";
+        String sql = "{CALL AgregarLote(?, ?, ?, ?, ?)}";
 
-    try (CallableStatement stmt = cn.prepareCall(sql)) {
-        stmt.setInt(1, producto.Id_Producto);
-        stmt.setDate(2, producto.Fecha_Caducidad);
-        stmt.setFloat(3, producto.Precio_Compra);
-        stmt.setFloat(4, producto.Precio_Venta);
-        stmt.setInt(5, producto.Cantidad_Producto);
+        try (CallableStatement stmt = cn.prepareCall(sql)) {
+            stmt.setInt(1, producto.Id_Producto);
+            stmt.setDate(2, producto.Fecha_Caducidad);
+            stmt.setFloat(3, producto.Precio_Compra);
+            stmt.setFloat(4, producto.Precio_Venta);
+            stmt.setInt(5, producto.Cantidad_Producto);
 
-        stmt.execute();
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-}
-
-
-    
-    
-    
-    public int obtenerCantidadStockProducto(String busqueda) {
-    int cantidadStock = 0;
-    try {
-        String query = "{ CALL MostrarCantidadStok(?) }";
-        CallableStatement cstmt = cn.prepareCall(query);
-        cstmt.setString(1, busqueda);
-        ResultSet rs = cstmt.executeQuery();
-        if (rs.next()) {
-            cantidadStock = rs.getInt("Cantidad_Producto");
+            stmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, e);
     }
-    return cantidadStock;
-}
-    
-     public ArrayList<Clase_Producto> mostrarDatosComboCompra(String busqueda) {
+
+    public int obtenerCantidadStockProducto(String busqueda) {
+        int cantidadStock = 0;
+        try {
+            String query = "{ CALL MostrarCantidadStok(?) }";
+            CallableStatement cstmt = cn.prepareCall(query);
+            cstmt.setString(1, busqueda);
+            ResultSet rs = cstmt.executeQuery();
+            if (rs.next()) {
+                cantidadStock = rs.getInt("Cantidad_Producto");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return cantidadStock;
+    }
+
+    public ArrayList<Clase_Producto> mostrarDatosComboCompra(String busqueda) {
         ArrayList<Clase_Producto> listaProductos = new ArrayList<>();
         try {
             String query = "{ CALL MostrarProductosCompra(?) }";
@@ -87,7 +83,6 @@ public class CRUD_Compra_Producto {
         }
         return listaProductos;
     }
-
 
     public void agregarComprasYProductos(List<Class_Compra> compras) {
         String sql = "{CALL AgregarCompraYProducto(?, ?, ?, ?)}";
@@ -202,8 +197,6 @@ public class CRUD_Compra_Producto {
         return Proveedor;
     }
 
-   
-
     public boolean verificarCompraProducto(String dato) {
         ResultSet rs;
 
@@ -219,8 +212,5 @@ public class CRUD_Compra_Producto {
             return false;
         }
     }
-   
-
-
 
 }
