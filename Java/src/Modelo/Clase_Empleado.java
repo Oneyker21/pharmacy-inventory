@@ -19,8 +19,6 @@ public class Clase_Empleado extends Clase_Persona {
     public Time Hora_Entrada;
     public Time Hora_Salida;
 
-    
-
     public Clase_Empleado(BigDecimal Salario, Time Hora_Entrada, Time Hora_Salida, String Cedula, String Nombre_1, String Nombre_2, String Apellido_1, String Apellido_2, String Numero_Celular, String Gmail, String Direccion) {
         super(Cedula, Nombre_1, Nombre_2, Apellido_1, Apellido_2, Numero_Celular, Gmail, Direccion);
         this.Salario = Salario;
@@ -68,20 +66,20 @@ public class Clase_Empleado extends Clase_Persona {
         this.Hora_Salida = Hora_Salida;
     }
 
- @Override
-public String toString() {
-    if (Id_Empleado != 0) {
-        return "Clase_Empleado{" +
-                "Id_Empleado=" + Id_Empleado +
-                ", Nombre_1='" + getNombre_1() + '\'' +
-                ", Apellido_1='" + getApellido_1() + '\'' +
-                ", Salario=" + Salario +
-                ", Hora_Entrada=" + Hora_Entrada +
-                ", Hora_Salida=" + Hora_Salida +
-                '}';
-    } else {
-        return Id_Empleado + " - " + getNombre_1() + " " + getApellido_1();
+    @Override
+    public String toString() {
+        if (Id_Empleado != 0) {
+            return "Clase_Empleado{"
+                    + "Id_Empleado=" + Id_Empleado
+                    + ", Nombre_1='" + getNombre_1() + '\''
+                    + ", Apellido_1='" + getApellido_1() + '\''
+                    + ", Salario=" + Salario
+                    + ", Hora_Entrada=" + Hora_Entrada
+                    + ", Hora_Salida=" + Hora_Salida
+                    + '}';
+        } else {
+            return Id_Empleado + " - " + getNombre_1() + " " + getApellido_1();
+        }
     }
-}
 
 }

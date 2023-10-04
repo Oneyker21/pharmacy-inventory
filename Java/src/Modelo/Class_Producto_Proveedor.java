@@ -1,4 +1,3 @@
-
 package Modelo;
 
 /**
@@ -6,6 +5,7 @@ package Modelo;
  * @author diedr
  */
 public class Class_Producto_Proveedor extends Clase_Producto {
+
     int Id_Producto_Proveedor;
     int Id_Proveedor;
     int Id_Producto;

@@ -1,14 +1,16 @@
-
 package Modelo;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 /**
  *
  * @author Diers
  */
 public class Login {
+
     public static boolean validarCredenciales(Connection connection, String usuario, String contraseña) {
         String query = "SELECT Rol FROM Usuarios WHERE Usuario = ? AND Contraseña = ?";
 

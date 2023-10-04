@@ -119,17 +119,18 @@ public class Clase_Persona {
     public void setDireccion(String Direccion) {
         this.Direccion = Direccion;
     }
+
     public String toString() {
-        return "Clase_Persona{" +
-                "Id_Persona=" + Id_Persona +
-                ", Cedula='" + Cedula + '\'' +
-                ", Nombre_1='" + Nombre_1 + '\'' +
-                ", Nombre_2='" + Nombre_2 + '\'' +
-                ", Apellido_1='" + Apellido_1 + '\'' +
-                ", Apellido_2='" + Apellido_2 + '\'' +
-                ", Numero_Celular='" + Numero_Celular + '\'' +
-                ", Gmail='" + Gmail + '\'' +
-                ", Direccion='" + Direccion + '\'' +
-                '}';
+        return "Clase_Persona{"
+                + "Id_Persona=" + Id_Persona
+                + ", Cedula='" + Cedula + '\''
+                + ", Nombre_1='" + Nombre_1 + '\''
+                + ", Nombre_2='" + Nombre_2 + '\''
+                + ", Apellido_1='" + Apellido_1 + '\''
+                + ", Apellido_2='" + Apellido_2 + '\''
+                + ", Numero_Celular='" + Numero_Celular + '\''
+                + ", Gmail='" + Gmail + '\''
+                + ", Direccion='" + Direccion + '\''
+                + '}';
     }
 }

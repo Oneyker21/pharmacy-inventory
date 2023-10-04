@@ -1,4 +1,3 @@
-
 package Modelo;
 
 /**
@@ -7,21 +6,21 @@ package Modelo;
  */
 public class Clase_Presentacion {
 
-   int Id_Presentacion;
-   String Nombre_Presentacion;
-   String Detalle;
-   String textoBusqueda;
+    int Id_Presentacion;
+    String Nombre_Presentacion;
+    String Detalle;
+    String textoBusqueda;
 
     public Clase_Presentacion(int Id_Presentacion, String Nombre_Presentacion) {
         this.Id_Presentacion = Id_Presentacion;
         this.Nombre_Presentacion = Nombre_Presentacion;
     }
+
     public String toString() {
         return Id_Presentacion + " - " + Nombre_Presentacion;
     }
-   
-    
-     public Clase_Presentacion(String textoBusqueda) {
+
+    public Clase_Presentacion(String textoBusqueda) {
         this.textoBusqueda = textoBusqueda;
     }
 
@@ -59,5 +58,5 @@ public class Clase_Presentacion {
     public void setDetalle(String Detalle) {
         this.Detalle = Detalle;
     }
-  
+
 }

@@ -13,7 +13,7 @@ public class Class_Compra extends Class_Compra_Producto {
     int Id_Proveedor;
 
     public Class_Compra(LocalDateTime Fecha_Compra, int Id_Proveedor, int Id_Producto, int Cantidad) {
-        super( Id_Producto,Cantidad);
+        super(Id_Producto, Cantidad);
         this.Fecha_Compra = Fecha_Compra;
         this.Id_Proveedor = Id_Proveedor;
     }

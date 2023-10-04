@@ -1,8 +1,7 @@
-
 package Modelo;
 
-
 public class Clase_Producto_Cargardatos {
+
     public int Id_Producto;
     public String Nombre;
     public String Descripcion;
@@ -76,11 +75,11 @@ public class Clase_Producto_Cargardatos {
     public void setId_Laboratorio(String Id_Laboratorio) {
         this.Id_Laboratorio = Id_Laboratorio;
     }
-  @Override
-public String toString() {
-    return "Nombre: " + Nombre + ", Precio: " + Precio_Venta + ", Categoría: " + Id_Categoria
-         + ", Presentación: " + Id_Presentacion + ", Laboratorio: " + Id_Laboratorio;
-}
 
+    @Override
+    public String toString() {
+        return "Nombre: " + Nombre + ", Precio: " + Precio_Venta + ", Categoría: " + Id_Categoria
+                + ", Presentación: " + Id_Presentacion + ", Laboratorio: " + Id_Laboratorio;
+    }
 
 }

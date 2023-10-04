@@ -42,22 +42,20 @@ public class Clase_Producto extends Clase_Proveedor {
         this.Id_Laboratorio = Id_Laboratorio;
     }
 
-  
-
-   public Clase_Producto(int Id_Producto, String Nombre, String Descripcion, int Cantidad_Producto, float Precio_Compra, float Precio_Venta, byte[] Imagen_Producto, java.util.Date Fecha_Caducidad, int Id_Categoria, int Id_Presentacion, int Id_Laboratorio, int Id_Proveedor) {
-    super(Id_Proveedor);
-    this.Id_Producto = Id_Producto;
-    this.Nombre = Nombre;
-    this.Descripcion = Descripcion;
-    this.Cantidad_Producto = Cantidad_Producto;
-    this.Precio_Compra = Precio_Compra;
-    this.Precio_Venta = Precio_Venta;
-    this.Imagen_Producto = Imagen_Producto;
-    this.Fecha_Caducidad = new java.sql.Date(Fecha_Caducidad.getTime());
-    this.Id_Categoria = Id_Categoria;
-    this.Id_Presentacion = Id_Presentacion;
-    this.Id_Laboratorio = Id_Laboratorio;
-}
+    public Clase_Producto(int Id_Producto, String Nombre, String Descripcion, int Cantidad_Producto, float Precio_Compra, float Precio_Venta, byte[] Imagen_Producto, java.util.Date Fecha_Caducidad, int Id_Categoria, int Id_Presentacion, int Id_Laboratorio, int Id_Proveedor) {
+        super(Id_Proveedor);
+        this.Id_Producto = Id_Producto;
+        this.Nombre = Nombre;
+        this.Descripcion = Descripcion;
+        this.Cantidad_Producto = Cantidad_Producto;
+        this.Precio_Compra = Precio_Compra;
+        this.Precio_Venta = Precio_Venta;
+        this.Imagen_Producto = Imagen_Producto;
+        this.Fecha_Caducidad = new java.sql.Date(Fecha_Caducidad.getTime());
+        this.Id_Categoria = Id_Categoria;
+        this.Id_Presentacion = Id_Presentacion;
+        this.Id_Laboratorio = Id_Laboratorio;
+    }
 
     public ImageIcon obtenerImagenComoIcono() {
         if (this.Imagen_Producto == null) {
@@ -75,7 +73,7 @@ public class Clase_Producto extends Clase_Proveedor {
         return icono;
     }
 
-     public Clase_Producto(int Id_Producto, String Nombre, String Descripcion, int Cantidad_Producto, float Precio_Compra, float Precio_Venta, byte[] Imagen_Producto, Date Fecha_Caducidad, int Id_Categoria, int Id_Presentacion, int Id_Laboratorio) {
+    public Clase_Producto(int Id_Producto, String Nombre, String Descripcion, int Cantidad_Producto, float Precio_Compra, float Precio_Venta, byte[] Imagen_Producto, Date Fecha_Caducidad, int Id_Categoria, int Id_Presentacion, int Id_Laboratorio) {
         this.Id_Producto = Id_Producto;
         this.Nombre = Nombre;
         this.Descripcion = Descripcion;
@@ -91,8 +89,6 @@ public class Clase_Producto extends Clase_Proveedor {
 
     public Clase_Producto() {
     }
-
-   
 
     public Clase_Producto(String Nombre, String Descripcion, int Cantidad_Producto, float Precio_Compra, float Precio_Venta, byte[] Imagen_Producto, Date Fecha_Caducidad, int Id_Categoria, int Id_Presentacion, int Id_Laboratorio, int Id_Proveedor) {
         super(Id_Proveedor);
@@ -112,20 +108,16 @@ public class Clase_Producto extends Clase_Proveedor {
         this.Id_Producto = Id_Producto;
     }
 
-   public Clase_Producto(int Id_Producto, String Nombre, float Precio_Venta) {
-    this.Id_Producto = Id_Producto;
-    this.Nombre = Nombre;
-    this.Precio_Venta= Precio_Venta;
-}
-  
-
-
+    public Clase_Producto(int Id_Producto, String Nombre, float Precio_Venta) {
+        this.Id_Producto = Id_Producto;
+        this.Nombre = Nombre;
+        this.Precio_Venta = Precio_Venta;
+    }
 
     @Override
     public String toString() {
         return "Nombre: " + Nombre + ", Precio: " + String.valueOf(Precio_Venta);
     }
-   
 
     public int getId_Producto() {
         return Id_Producto;
@@ -214,22 +206,21 @@ public class Clase_Producto extends Clase_Proveedor {
     public void setId_Laboratorio(int Id_Laboratorio) {
         this.Id_Laboratorio = Id_Laboratorio;
     }
-   public String toDetailedString() {
-    return "Clase_Producto { " +
-        "Id_Producto=" + Id_Producto +
-        ", Nombre='" + Nombre + '\'' +
-        ", Descripcion='" + Descripcion + '\'' +
-        ", Cantidad_Producto=" + Cantidad_Producto +
-        ", Precio_Compra=" + Precio_Compra +
-        ", Precio_Venta=" + Precio_Venta +
-        // No se incluye Imagen_Producto porque es un array de bytes
-        ", Fecha_Caducidad=" + Fecha_Caducidad +
-        ", Id_Categoria=" + Id_Categoria +
-        ", Id_Presentacion=" + Id_Presentacion +
-        ", Id_Laboratorio=" + Id_Laboratorio +
-        " }";
-}
 
-
+    public String toDetailedString() {
+        return "Clase_Producto { "
+                + "Id_Producto=" + Id_Producto
+                + ", Nombre='" + Nombre + '\''
+                + ", Descripcion='" + Descripcion + '\''
+                + ", Cantidad_Producto=" + Cantidad_Producto
+                + ", Precio_Compra=" + Precio_Compra
+                + ", Precio_Venta=" + Precio_Venta
+                + // No se incluye Imagen_Producto porque es un array de bytes
+                ", Fecha_Caducidad=" + Fecha_Caducidad
+                + ", Id_Categoria=" + Id_Categoria
+                + ", Id_Presentacion=" + Id_Presentacion
+                + ", Id_Laboratorio=" + Id_Laboratorio
+                + " }";
+    }
 
 }

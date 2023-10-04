@@ -1,4 +1,3 @@
-
 package Modelo;
 
 /**
@@ -6,21 +5,22 @@ package Modelo;
  * @author diedr
  */
 public class Clase_Categoria {
-   int Id_Categoria;
-   String Nombre_Categoria;
-   String Descripcion;
+
+    int Id_Categoria;
+    String Nombre_Categoria;
+    String Descripcion;
 
     public Clase_Categoria(int Id_Categoria, String Nombre_Categoria) {
         this.Id_Categoria = Id_Categoria;
         this.Nombre_Categoria = Nombre_Categoria;
     }
-   
 
     public Clase_Categoria(String Nombre_Categoria, String Descripcion) {
         this.Nombre_Categoria = Nombre_Categoria;
         this.Descripcion = Descripcion;
     }
-      public String toString() {
+
+    public String toString() {
         return Id_Categoria + " - " + Nombre_Categoria;
     }
 
@@ -53,7 +53,5 @@ public class Clase_Categoria {
     public void setDescripcion(String Descripcion) {
         this.Descripcion = Descripcion;
     }
-   
-    }
 
-
+}

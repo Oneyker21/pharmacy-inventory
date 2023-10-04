@@ -1,4 +1,3 @@
-
 package Modelo;
 
 import java.math.BigDecimal;
@@ -7,8 +6,9 @@ import java.math.BigDecimal;
  *
  * @author diedr
  */
-public class Class_Venta_Producto  {
-   int Id_Venta_Producto;
+public class Class_Venta_Producto {
+
+    int Id_Venta_Producto;
     int Cantidad;
     BigDecimal Descuento;
     int Id_Venta;

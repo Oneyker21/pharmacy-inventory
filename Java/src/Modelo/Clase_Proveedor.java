@@ -5,7 +5,8 @@ package Modelo;
  * @author diedr
  */
 public class Clase_Proveedor extends Clase_Persona {
-   public int Id_Proveedor;
+
+    public int Id_Proveedor;
 
     public Clase_Proveedor(int Id_Proveedor) {
         this.Id_Proveedor = Id_Proveedor;
@@ -13,8 +14,6 @@ public class Clase_Proveedor extends Clase_Persona {
 
     public Clase_Proveedor() {
     }
-
-    
 
     public Clase_Proveedor(int Id_Proveedor, String Nombre_1, String Apellido_1) {
         super(Nombre_1, Apellido_1);
